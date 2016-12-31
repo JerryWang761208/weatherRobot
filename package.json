@@ -7,7 +7,6 @@
     "postinstall": "npm run build",
     "server": "node server.js",
     "build": "webpack -p --config webpack.production.config.js",
-    "test-cross-browser": "./node_modules/karma/bin/karma start karma.cross-browser.config.js",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "clean": "rm build/app.js"
   },
@@ -31,13 +30,6 @@
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
-    "karma": "^0.13.9",
-    "karma-coverage": "^0.2.7",
-    "karma-mocha": "^0.1.10",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-sauce-launcher": "^0.2.10",
-    "karma-sinon-chai": "^0.3.0",
-    "karma-webpack": "^1.5.0",
     "react-hot-loader": "^1.2.3",
     "webpack-dev-server": "^1.7.0"
   },
