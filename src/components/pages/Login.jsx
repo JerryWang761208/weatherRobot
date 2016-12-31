@@ -9,8 +9,9 @@ var LoginPage = React.createClass({
 
   getInitialState: function(){
     return {
-      loginID: '',
-      password: '',
+      name: '',
+      fbid: '',
+      submitBtnName:'FB Login',
       isSubmitted: false
     };
   },
@@ -28,13 +29,13 @@ var LoginPage = React.createClass({
               <form role="form" onSubmit={this.handleClick} className="ng-pristine ng-valid"> 
                 <div className="form-content"> 
                   <div className="form-group"> 
-                    <input type="text" className="form-control input-underline input-lg" placeholder="Email" /> 
+                    <input type="text" value={this.state.name} className="form-control input-underline input-lg" placeholder="Name" /> 
                   </div> 
                   <div className="form-group"> 
-                    <input type="password" className="form-control input-underline input-lg" placeholder="Password" /> 
+                    <input type="text" value={this.state.fbid} className="form-control input-underline input-lg" placeholder="FB_ID" /> 
                   </div> 
                 </div> 
-                <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">FB Login</button> 
+                <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">{this.state.submitBtnName}</button> 
               </form> 
             </div> 
           </div> 
@@ -44,6 +45,8 @@ var LoginPage = React.createClass({
       
 
   },
+
+
 
   setLoginID: function(e) {
 
@@ -72,6 +75,11 @@ var LoginPage = React.createClass({
 
     return false;
 
+  },
+
+  handleSubmit: function(self){
+    //write in to firebase
+    console.log('test'+self.state.name);
   },
 
 
@@ -112,10 +120,20 @@ var LoginPage = React.createClass({
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-testAPI: function() {
+testAPI: function(self) {
   console.log('Welcome!  Fetching your information.... ');
   FB.api('/me', function(response) {
-  console.log('Successful login for: ' + response.name);
+  console.log('Successful login for: ' + response.name + response.id);
+  self.setState({
+    name:response.name,
+    fbid:response.id,
+    submitBtnName:'submit',
+    isSubmitted:true
+  });
+
+  if(self.state.isSubmitted){
+    self.handleSubmit(self);
+  }
   document.getElementById('status').innerHTML =
     'Thanks for logging in, ' + response.name + '!';
   });
@@ -131,7 +149,7 @@ statusChangeCallback: function(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
-    this.testAPI();
+    this.testAPI(this);
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = 'Please log ' +
