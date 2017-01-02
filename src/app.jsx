@@ -23,7 +23,8 @@ var config = {
   };
 firebase.initializeApp(config);
 firebase.database().ref().set({
-  appName:'Weather_Robot'      
+  appName:'Weather_Robot',
+  
 });
 render(
   <Router history={history} routes={rootRoute} />,

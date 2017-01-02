@@ -4,6 +4,10 @@ import {Panel, Input, Button} from 'react-bootstrap';
 import { History } from 'history';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import * as firebase from 'firebase';
+import getWeather from '../../getWeather.js';
+import config from '../../config.js';
+
+
 
 var LoginPage = React.createClass({
 
@@ -98,10 +102,27 @@ var LoginPage = React.createClass({
   },
 
   handleSubmit: function(self){
+    const account = {
+      email: config.FB_ACCOUNT,
+      password: config.FB_PW
+    };
     //write in to firebase
-    console.log('test'+self.state.name);
+    console.log('tests'+self.state.name);
     //name fbid city
     
+    const firebaseRef = firebase.database().ref();
+    const peopleRef = firebaseRef.child('people');
+    peopleRef.on('person_add',(snapshot)=>{
+      //call eather robot
+    });
+
+    let newPeopleRef = peopleRef.push()
+    newPeopleRef.set({
+      name:self.state.name,
+      city:self.state.city,
+      fbid:self.state.fbid
+    });
+    console.log('key:'+newPeopleRef.key);
   },
 
 
