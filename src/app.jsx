@@ -22,7 +22,7 @@ var config = {
     messagingSenderId: "554509220665"
   };
 firebase.initializeApp(config);
-firebase.database.ref().set({
+firebase.database().ref().set({
   appName:'Weather_Robot'      
 });
 render(
