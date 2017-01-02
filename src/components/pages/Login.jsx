@@ -3,7 +3,7 @@ import Router from 'react-router';
 import {Panel, Input, Button} from 'react-bootstrap';
 import { History } from 'history';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
+import * as firebase from 'firebase';
 
 var LoginPage = React.createClass({
 
@@ -12,6 +12,7 @@ var LoginPage = React.createClass({
       name: '',
       fbid: '',
       submitBtnName:'FB Login',
+      city:'Tainan',
       isSubmitted: false
     };
   },
@@ -34,6 +35,19 @@ var LoginPage = React.createClass({
                   <div className="form-group"> 
                     <input type="text" value={this.state.fbid} className="form-control input-underline input-lg" placeholder="FB_ID" /> 
                   </div> 
+                  <div className="form-group">
+                    <select className="form-control" value={this.state.city} onChange={this.handleChange}>
+                      <option value="Keelung">基隆</option>
+                      <option value="Taipei">台北</option>
+                      <option value="Taoyuan">桃園</option>
+                      <option value="Hsinchu">新竹</option>
+                      <option value="Taichung">台中</option>
+                      <option value="Tainan">台南</option>
+                      <option value="Kaohsiung">高雄</option>
+                      <option value="Hualien">花蓮</option>
+                      <option value="Taitung">台東</option>
+                    </select>
+                  </div>
                 </div> 
                 <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">{this.state.submitBtnName}</button> 
               </form> 
@@ -46,7 +60,13 @@ var LoginPage = React.createClass({
 
   },
 
-
+  handleChange: function(e) {
+  
+    this.setState({
+      city: e.target.value
+    });
+    
+  },
 
   setLoginID: function(e) {
 
@@ -80,10 +100,14 @@ var LoginPage = React.createClass({
   handleSubmit: function(self){
     //write in to firebase
     console.log('test'+self.state.name);
+    //name fbid city
+    
   },
 
 
   componentDidMount: function() {
+    
+    
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1796462227274813',
